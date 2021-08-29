@@ -1,0 +1,149 @@
+{
+  "normalizedInput": {
+    "line1": "",
+    "city": "Denver",
+    "state": "CO",
+    "zip": "80203"
+  },
+  "kind": "civicinfo#representativeInfoResponse",
+  "divisions": {
+    "ocd-division/country:us/state:co/cd:1": {
+      "name": "Colorado's 1st congressional district",
+      "officeIndices": [
+        1
+      ]
+    },
+    "ocd-division/country:us/state:co": {
+      "name": "Colorado",
+      "officeIndices": [
+        0
+      ]
+    }
+  },
+  "offices": [
+    {
+      "name": "U.S. Senator",
+      "divisionId": "ocd-division/country:us/state:co",
+      "levels": [
+        "country"
+      ],
+      "roles": [
+        "legislatorUpperBody"
+      ],
+      "officialIndices": [
+        0,
+        1
+      ]
+    },
+    {
+      "name": "U.S. Representative",
+      "divisionId": "ocd-division/country:us/state:co/cd:1",
+      "levels": [
+        "country"
+      ],
+      "roles": [
+        "legislatorLowerBody"
+      ],
+      "officialIndices": [
+        2
+      ]
+    }
+  ],
+  "officials": [
+    {
+      "name": "John W. Hickenlooper",
+      "address": [
+        {
+          "line1": "B85",
+          "city": "Washington",
+          "state": "DC",
+          "zip": "20510"
+        }
+      ],
+      "party": "Democratic Party",
+      "phones": [
+        "(202) 224-5941"
+      ],
+      "urls": [
+        "https://www.hickenlooper.senate.gov/"
+      ],
+      "photoUrl": "http://www.colorado.gov/cms/governor/governor-main/images/GovernorHickenlooperInBlueShirt.jpg",
+      "channels": [
+        {
+          "type": "Twitter",
+          "id": "SenatorHick"
+        },
+        {
+          "type": "Facebook",
+          "id": "JohnHickenlooper"
+        }
+      ]
+    },
+    {
+      "name": "Michael F. Bennet",
+      "address": [
+        {
+          "line1": "261 Russell Senate Office Building",
+          "city": "Washington",
+          "state": "DC",
+          "zip": "20510"
+        }
+      ],
+      "party": "Democratic Party",
+      "phones": [
+        "(202) 224-5852"
+      ],
+      "urls": [
+        "https://www.bennet.senate.gov/"
+      ],
+      "photoUrl": "http://bioguide.congress.gov/bioguide/photo/B/B001267.jpg",
+      "channels": [
+        {
+          "type": "Facebook",
+          "id": "senbennetco"
+        },
+        {
+          "type": "Twitter",
+          "id": "SenatorBennet"
+        },
+        {
+          "type": "YouTube",
+          "id": "SenatorBennet"
+        }
+      ]
+    },
+    {
+      "name": "Diana DeGette",
+      "address": [
+        {
+          "line1": "2111 Rayburn House Office Building",
+          "city": "Washington",
+          "state": "DC",
+          "zip": "20515"
+        }
+      ],
+      "party": "Democratic Party",
+      "phones": [
+        "(202) 225-4431"
+      ],
+      "urls": [
+        "https://degette.house.gov/"
+      ],
+      "photoUrl": "http://degette.house.gov/sites/degette.house.gov/files/styles/congress_image_medium/public/wysiwyg_uploaded/DLD%20High%20Res%205x7_1.JPG?itok=CuIkDIeB",
+      "channels": [
+        {
+          "type": "Facebook",
+          "id": "DianaDeGette"
+        },
+        {
+          "type": "Twitter",
+          "id": "RepDianaDeGette"
+        },
+        {
+          "type": "YouTube",
+          "id": "RepDianaDeGette"
+        }
+      ]
+    }
+  ]
+}

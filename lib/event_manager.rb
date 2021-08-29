@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'csv'
 require 'google/apis/civicinfo_v2'
 
@@ -16,13 +18,19 @@ contents = CSV.open(
 contents.each do |row|
   name = row[:first_name]
   zipcode = clean_zipcode(row[:zipcode])
-  
-  legislators = civic_info.representative_info_by_address(
-    address: zipcode,
-    levels: 'country',
-    roles: ['legislatorUpperBody', 'legislatorLowerBody']
-  )
-  legislators = legislators.officials
 
-  puts "#{name} #{zipcode} #{legislators}"
+  begin
+    legislators = civic_info.representative_info_by_address(
+      address: zipcode,
+      levels: 'country',
+      roles: %w[legislatorUpperBody legislatorLowerBody]
+    )
+    legislators = legislators.officials
+    legislators_names = legislators.map(&:name)
+    legislators_string = legislators_names.join(', ')
+  rescue StandardError
+    'You can find your representatives by visiting www.commoncause.org/take-action/find-elected-officials'
+  end
+
+  puts "#{name} #{zipcode} #{legislators_string}"
 end
