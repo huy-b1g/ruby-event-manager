@@ -8,6 +8,22 @@ def clean_zipcode(zipcode)
   zipcode.to_s.rjust(5, '0')[0..4]
 end
 
+def clean_homephone(homephone)
+  only_number_homephone = homephone.delete('^0-9')
+  case true
+  when only_number_homephone.length < 10
+    'Bad number'
+  when only_number_homephone.length == 10
+    only_number_homephone
+  when only_number_homephone.length == 11 && only_number_homephone[0] == '1'
+    only_number_homephone[1..-1]
+  when only_number_homephone.length == 11 && only_number_homephone[0] != '1'
+    'Bad number'
+  when only_number_homephone.length > 11
+    'Bad number'
+  end
+end
+
 def legislators_by_zipcode(zip)
   civic_info = Google::Apis::CivicinfoV2::CivicInfoService.new
   civic_info.key = 'AIzaSyClRzDqDh5MsXwnCWi0kOiiBivP6JsSyBw'
@@ -37,13 +53,19 @@ contents = CSV.open(
   headers: true,
   header_converters: :symbol
 )
-template_letter = File.read('form_letter.erb')
-erb_template = ERB.new template_letter
+
+# Test Clean Phone Numbers
 contents.each do |row|
-  id = row[0]
-  name = row[:first_name]
-  zipcode = clean_zipcode(row[:zipcode])
-  legislators = legislators_by_zipcode(zipcode)
-  form_letter = erb_template.result(binding)
-  save_thank_you_letter(id, form_letter)
+  homephone = clean_homephone(row[:homephone])
+  puts homephone
 end
+# template_letter = File.read('form_letter.erb')
+# erb_template = ERB.new template_letter
+# contents.each do |row|
+#   id = row[0]
+#   name = row[:first_name]
+#   zipcode = clean_zipcode(row[:zipcode])
+#   legislators = legislators_by_zipcode(zipcode)
+#   form_letter = erb_template.result(binding)
+#   save_thank_you_letter(id, form_letter)
+# end
