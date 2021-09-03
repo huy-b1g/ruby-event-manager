@@ -24,6 +24,17 @@ def clean_homephone(homephone)
   end
 end
 
+def clean_regdate_to_time(regdate)
+  regdate.insert(0, '0').insert(3, '0') if regdate[6] == ' '
+  regdate.insert(6, '20') if regdate[6] != '2'
+  DateTime.strptime(regdate, '%m/%d/%Y %k:%M').hour
+end
+
+def find_peak_regdate(reg_hours)
+  freq = reg_hours.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+  reg_hours.max_by { |v| freq[v] }
+end
+
 def legislators_by_zipcode(zip)
   civic_info = Google::Apis::CivicinfoV2::CivicInfoService.new
   civic_info.key = 'AIzaSyClRzDqDh5MsXwnCWi0kOiiBivP6JsSyBw'
@@ -53,12 +64,15 @@ contents = CSV.open(
   headers: true,
   header_converters: :symbol
 )
-
+reg_hours = []
 # Test Clean Phone Numbers
 contents.each do |row|
-  homephone = clean_homephone(row[:homephone])
-  puts homephone
+  # homephone = clean_homephone(row[:homephone])
+  # puts homephone
+  reg_hours << clean_regdate_to_time(row[:regdate])
 end
+
+puts "Peak registration hour is #{find_peak_regdate(reg_hours)}"
 # template_letter = File.read('form_letter.erb')
 # erb_template = ERB.new template_letter
 # contents.each do |row|
