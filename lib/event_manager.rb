@@ -31,8 +31,10 @@ def clean_regdate_to_time(regdate)
 end
 
 def find_peak_regdate(reg_hours)
-  freq = reg_hours.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
-  reg_hours.max_by { |v| freq[v] }
+  freq = reg_hours.each_with_object(Hash.new(0)) { |v, h| h[v] += 1; }
+  arr = freq.sort_by { |_k, v| v }.reverse
+  arr.each { |k, v| puts "#{k} hour: #{v}" }
+  # reg_hours.max_by { |v| freq[v] }
 end
 
 def legislators_by_zipcode(zip)
@@ -72,7 +74,7 @@ contents.each do |row|
   reg_hours << clean_regdate_to_time(row[:regdate])
 end
 
-puts "Peak registration hour is #{find_peak_regdate(reg_hours)}"
+find_peak_regdate(reg_hours)
 # template_letter = File.read('form_letter.erb')
 # erb_template = ERB.new template_letter
 # contents.each do |row|
