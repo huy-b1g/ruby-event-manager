@@ -25,16 +25,26 @@ def clean_homephone(homephone)
 end
 
 def clean_regdate_to_time(regdate)
-  regdate.insert(0, '0').insert(3, '0') if regdate[6] == ' '
-  regdate.insert(6, '20') if regdate[6] != '2'
+  regdate = reformat_regdate(regdate)
   DateTime.strptime(regdate, '%m/%d/%Y %k:%M').hour
 end
 
-def find_peak_regdate(reg_hours)
-  freq = reg_hours.each_with_object(Hash.new(0)) { |v, h| h[v] += 1; }
+def clean_regdate_to_wday(regdate)
+  reformat_regdate(regdate)
+  wday = DateTime.strptime(regdate, '%m/%d/%Y').wday
+  wday_arr = %w[Sunday Monday Tuesday Wednesday Thursday Friday Saturday]
+  wday_arr[wday]
+end
+
+def reformat_regdate(regdate)
+  regdate.insert(0, '0').insert(3, '0') if regdate[6] == ' '
+  regdate.insert(6, '20') if regdate[6] != '2'
+end
+
+def find_peak_regdate(regdate)
+  freq = regdate.each_with_object(Hash.new(0)) { |v, h| h[v] += 1; }
   arr = freq.sort_by { |_k, v| v }.reverse
-  arr.each { |k, v| puts "#{k} hour: #{v}" }
-  # reg_hours.max_by { |v| freq[v] }
+  arr.each { |k, v| puts "#{k}: #{v}" }
 end
 
 def legislators_by_zipcode(zip)
@@ -67,14 +77,19 @@ contents = CSV.open(
   header_converters: :symbol
 )
 reg_hours = []
+reg_wdays = []
 # Test Clean Phone Numbers
 contents.each do |row|
   # homephone = clean_homephone(row[:homephone])
   # puts homephone
   reg_hours << clean_regdate_to_time(row[:regdate])
+  reg_wdays << clean_regdate_to_wday(row[:regdate])
 end
-
+puts 'Time Targeting:'
 find_peak_regdate(reg_hours)
+
+puts 'Day of the Week Targeting:'
+find_peak_regdate(reg_wdays)
 # template_letter = File.read('form_letter.erb')
 # erb_template = ERB.new template_letter
 # contents.each do |row|
